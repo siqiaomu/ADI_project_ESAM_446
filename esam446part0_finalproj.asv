@@ -1,0 +1,11 @@
+%esam 446 final project
+%part 0 
+
+clear all
+clc
+close all
+
+%i) solving using scheme ODEADI (one half step of backward euler, then one
+%half step of forward euler)
+
+
