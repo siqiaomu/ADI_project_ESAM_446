@@ -1,3 +1,5 @@
+
+
 function [X] = tri(N, A, B, C, D, X)
     AP = A;
     BP = B;
@@ -8,8 +10,8 @@ function [X] = tri(N, A, B, C, D, X)
         BP(i) = BP(i) - W * CP(i - 1);
         DP(i) = DP(i) - W * DP(i - 1);
     end
-    X(N) = DP(N)/BP(N);
+    X(N) = DP(N)/B(N);
     for j = N-1:-1:1
-        X(i) = (DP(i) - CP(i) * X(i + 1))/BP(i);
+        X(i) = (D(i) - C(i) * X(i + 1))/B(i);
     end 
 end
