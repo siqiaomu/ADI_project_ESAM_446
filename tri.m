@@ -1,10 +1,11 @@
-function [X] = tri(N, A, B, C, D, X)
+function [X] = tri(N, A, B, C, D)
+    X = zeros(1, N);
     AP = A;
     BP = B;
     CP = C;
     DP = D;
     for i = 2:N
-        W = AP(i)/BP(i - 1);
+        W = AP(i - 1)/BP(i - 1);
         BP(i) = BP(i) - W * CP(i - 1);
         DP(i) = DP(i) - W * DP(i - 1);
     end
