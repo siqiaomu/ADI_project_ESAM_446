@@ -11,6 +11,6 @@ function [X] = tri(N, A, B, C, D)
     end
     X(N) = DP(N)/BP(N);
     for j = N-1:-1:1
-        X(i) = (DP(i) - CP(i) * X(i + 1))/BP(i);
+        X(j) = (DP(j) - CP(j) * X(j + 1))/BP(j);
     end 
 end
