@@ -10,7 +10,7 @@ d1 = 1;
 d2 = 1;
 DT = 0.01;
 TFIN = 0.1;
-NSTEPS = 10; %?????
+NSTEPS = 1; %?????
 DTPLOT = [0.05, 0.1];
 
 
@@ -55,7 +55,7 @@ end
 function [UEXACT] = exact(t, NX, NY, d1, d2, k1, k2)
     x = 0:(1/(NX - 1)):1;
     y = (0:(1/(NY - 1)):1)';
-    UEXACT = exp(-(k1^2 * d1 + k2^2 * d2)*pi^2*t) * sin(k2 * pi * y)  * sin(k1 * pi * x);
+    UEXACT = exp(-(k1^2 * d1 + k2^2 * d2)*t) * sin(k2 * pi * y)  * sin(k1 * pi * x);
 end
 
 
@@ -84,7 +84,7 @@ function [U] = driver(NSTEPS, NX, NY, k1, k2, DT, TFIN)
                 UHALF(j, k) = SOLX(j);
             end
         end
-        M
+        RHSX
         for j = 2:(NX - 1)
             RHSY = 0 * (1:NY);
             for k = 2:(NY - 1)
