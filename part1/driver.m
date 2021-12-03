@@ -17,30 +17,20 @@ UOUT = zeros(NX, NY);
 for itime = 1:NSTEPS
     UHALF = zeros(NX, NY);
     for k = 2:(NY - 1)
-        RHSX = 0 * (1:NX);
-        for j = 2:(NX - 1)
-            RHSX(j) = (1 - 2 * betax) * U(j, k) + betax * U(j, k - 1) + betax * U(j, k + 1);
-        end
+        RHSX = (1 - 2 * betax) * U(:, k) + betax * U(:, k - 1) + betax * U(:, k + 1);
         RHSX(1) = 0;
         RHSX(NX) = 0;
         [AX, BX, CX, M] = mat(betax, NX);
         SOLX = tri(NX, AX, BX, CX, RHSX);
-        for j = 1:NX
-            UHALF(j, k) = SOLX(j);
-        end
+        UHALF(:, k) = SOLX';
     end
     for j = 2:(NX - 1)
-        RHSY = 0 * (1:NY);
-        for k = 2:(NY - 1)
-            RHSY(k) = (1 - 2 * betay) * UHALF(j, k) + betay * UHALF(j - 1, k) + betay * UHALF(j + 1, k);
-        end
+        RHSY = (1 - 2 * betay) * UHALF(j, :) + betay * UHALF(j - 1, :) + betay * UHALF(j + 1, :);
         RHSY(1) = 0;
         RHSY(NY) = 0;
         [AY, BY, CY, M] = mat(betay, NY);
         SOLY = tri(NY, AY, BY, CY, RHSY);
-        for k = 1:NY
-            UNEW(j, k) = SOLY(k);
-        end
+        UNEW(j, :) = SOLY;
     end
     U = UNEW;
     if itime == round(DTPLOT/DT)
