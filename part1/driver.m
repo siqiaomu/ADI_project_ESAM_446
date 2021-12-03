@@ -1,8 +1,8 @@
-clear;
+function [x, y, dtplot_output] = driver(setupfilename, outputfilename, outputfilenameexact)
+
 global NX NY XL XR YBOT YTOP k1 k2 d1 d2 DT TFIN NSTEPS DTPLOT
 
-[NX, NY, XL, XR, YBOT, YTOP, k1, k2, d1, d2, DT, TFIN, NSTEPS, DTPLOT] = setup('adiset.csv');
-
+[NX, NY, XL, XR, YBOT, YTOP, k1, k2, d1, d2, DT, TFIN, NSTEPS, DTPLOT] = setup(setupfilename);
 hx = 1/(NX - 1);
 hy = 1/(NY - 1);
 betax = DT/(2 * hx^2);
@@ -38,10 +38,12 @@ for itime = 1:NSTEPS
     end
 end
 
+writematrix(UOUT, outputfilename);
+
 UEXACT = exact(DTPLOT);
 
-hold on
-plot(UOUT(15, :), 'LineWidth', 5)
-hold on
-plot(UEXACT(15, :), 'LineWidth', 2)
-hold off
+writematrix(UEXACT, outputfilenameexact);
+
+dtplot_output = DTPLOT;
+
+end
