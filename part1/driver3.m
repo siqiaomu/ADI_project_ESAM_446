@@ -1,4 +1,4 @@
-function [x, y, dtplot_output] = driver(setupfilename, outputfilename, outputfilenameexact)
+function [x, y, dtplot_output] = driver3(setupfilename, outputfilename, outputfilenameexact) %backward euler
 
 global NX NY XL XR YBOT YTOP k1 k2 d1 d2 DT TFIN NSTEPS DTPLOT
 
@@ -9,29 +9,22 @@ betax = DT/(2 * hx^2) *d1;
 betay = DT/(2 * hy^2) * d2;
 x = (XL:hx:XR)';
 y = YBOT:hy:YTOP;
-U = init(x, y);
+U = init2(x, y);
 UNEW = zeros(NX, NY);
 
 UOUT = zeros(NX, NY);
 
 for itime = 1:NSTEPS
-    UHALF = zeros(NX, NY);
+    UNEW = zeros(NX, NY);
     for k = 2:(NY - 1)
-        RHSX = (1 - 2 * betay) * U(:, k) + betay * U(:, k - 1) + betay * U(:, k + 1);
+        RHSX = U(:, k);
         RHSX(1) = 0;
         RHSX(NX) = 0;
         [AX, BX, CX, M] = mat(betax, NX);
         SOLX = tri(NX, AX, BX, CX, RHSX);
-        UHALF(:, k) = SOLX';
+        UNEW(:, k) = SOLX';
     end
-    for j = 2:(NX - 1)
-        RHSY = (1 - 2 * betax) * UHALF(j, :) + betax * UHALF(j - 1, :) + betax * UHALF(j + 1, :);
-        RHSY(1) = 0;
-        RHSY(NY) = 0;
-        [AY, BY, CY, M] = mat(betay, NY);
-        SOLY = tri(NY, AY, BY, CY, RHSY);
-        UNEW(j, :) = SOLY;
-    end
+   
     U = UNEW;
     if itime == round(DTPLOT/DT)
         UOUT = U;
@@ -40,7 +33,7 @@ end
 
 writematrix(UOUT, outputfilename);
 
-UEXACT = exact(DTPLOT, x, y);
+UEXACT = exact2(DTPLOT, x, y);
 
 writematrix(UEXACT, outputfilenameexact);
 

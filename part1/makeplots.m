@@ -1,3 +1,4 @@
+%q1 plots
 clear;
 
 setupfilename = 'q1/adiset_01.csv';
@@ -69,8 +70,5 @@ legend('ADI solution', 'exact solution')
 title('u(x, y, t) vs. u_{exact}(x, y, t) for x = 0.5, t = ' + string(dtplot))
 saveas(fig4, 'q1/plot4.png')
 
-
 clear;
-
-
 
