@@ -9,7 +9,6 @@ outputfilename = 'q3/adidat';
 ymid = 0.5 * 2000 + 1;
 xmid = 0.5 * 2000 + 1;
 
-
 for dtplot = [1:10]/(1000)
     figure;
     for dt = [0.001 0.0005]

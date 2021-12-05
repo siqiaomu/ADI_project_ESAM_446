@@ -27,7 +27,7 @@ for itime = 1:NSTEPS
         UHALF(:, k) = SOLX';
     end
     for j = 2:(NX - 1)
-        UHALFt = UHALF'
+        UHALFt = UHALF';
         RHSY = (1 - 2 * betax) * UHALFt(:, j) + betax * UHALFt(:, j - 1) + betax * UHALFt(:, j + 1);
         RHSY(1) = 0;
         RHSY(NY) = 0;
