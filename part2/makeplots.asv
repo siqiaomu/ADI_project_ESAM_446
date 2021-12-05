@@ -1,0 +1,25 @@
+%q1 plots
+clear;
+
+setupfilename = 'adiset_q3.csv';
+outputfilename = 'q3test/adidat';
+
+%[x, y, dt_output, dtplot_output] = driver(setupfilename, outputfilename);
+
+ymid = 26;
+xmid = 26;
+
+for dtplot = [1:10]/(1000)
+    for dt = [0.001 0.005]
+        UOUT = csvread(strcat(outputfilename, 'DT' + string(dt) + 'DTPLOT' + string(dtplot) + '.csv'));
+        fig1 = figure;
+        plot(x, UOUT(:, ymid), 'LineWidth',3)
+        hold on
+    end
+hold off
+xlabel('x')
+ylabel('u(x, 0.5, ' + string(dtplot) + ')')
+legend('ADI solution', 'exact solution')
+title('u(x, y, t) vs. u_{exact}(x, y, t) for y = 0.5, t = ' + string(dtplot))
+saveas(fig1, 'q1/plot1.png')
+end
