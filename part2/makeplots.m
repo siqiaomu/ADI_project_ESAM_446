@@ -8,23 +8,36 @@ outputfilename = 'q3/adidat';
 %%
 ymid = 0.5 * 2000 + 1;
 xmid = 0.5 * 2000 + 1;
+x = 0:(1/2000):1;
+y = 0:(1/2000):1;
 
-for dtplot = [1:10]/(1000)
-    figure;
-    for dt = [0.001 0.0005 0.0001 0.00005]
+dtplotlist = [1:10]/(1000);
+
+for j = 1:10
+    dtplot = dtplotlist(j);
+    fig1 = figure;
+    dtlist = [0.001 0.0005 0.0001 0.00005];
+    colorlist = {"red", "black", "green", "blue"};  % "green" #77AC30
+    linelist = [4.5 3.5 2.5 1.5];
+    for i = 1:4 
+        dt = dtlist(i);
+        color = colorlist{i};
+        line = linelist(i);
+
         UOUT = csvread(strcat(outputfilename, 'DT' + string(dt) + 'DTPLOT' + string(dtplot) + '.csv'));
-        plot(x, UOUT(:, ymid), 'LineWidth',3)
+        plot(x,UOUT(xmid,:),color,'LineWidth',line)
         hold on
     end
 hold off
 xlabel('x')
-ylabel('u(x, 0.5, ' + string(dtplot) + ')')
+ylabel('u(0.5, y, ' + string(dtplot) + ')')
 legend('0.001', '0.0005', '0.0001', '0.00005')
-title('u(x, y, t) vs. u_{exact}(x, y, t) for y = 0.5, t = ' + string(dtplot))
-%saveas(fig1, 'q3/plot1.png')
+title('u(x, y, t) for x = 0.5, t = ' + string(dtplot))
+saveas(fig1, 'q3/plotx' + string(j) + '.png')
+%subplots
 end
 
 %%
-uinit = init(x, y);
-figure;
-plot(x, uinit(:, ymid), 'LineWidth',3)
+% uinit = init(x, y);
+% figure;
+% plot(x, uinit(:, ymid), 'LineWidth',3)
